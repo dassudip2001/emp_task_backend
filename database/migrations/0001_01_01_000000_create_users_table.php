@@ -16,9 +16,18 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->boolean('status')->default(true);
+            $table->boolean('is_admin')->default(false);
+            $table->string('avatar')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreignId('organization_id')
+                ->nullable() // Allow users to not belong to an organization initially
+                ->constrained() // Creates a foreign key constraint to 'organizations' table 'id'
+                ->onDelete('set null'); // If an organization is deleted, set organization_id to null for its users
+
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
