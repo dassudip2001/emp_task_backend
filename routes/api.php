@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->group(
     function () {
         Route::post('login', [AuthController::class, 'login']);
+        Route::post('forgot-password', [\App\Http\Controllers\Api\Auth\ForgotPasswordController::class, 'sendResetLinkEmail']);
+        Route::post('reset', [\App\Http\Controllers\Api\Auth\ResetPasswordController::class, 'resetPassword']);
 
 
         Route::middleware('auth:api')->group(
