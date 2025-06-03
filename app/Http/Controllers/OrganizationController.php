@@ -26,8 +26,9 @@ class OrganizationController extends Controller
     {
         try {
             $data = $request->validated();
+
             $org = new Organization();
-            $org->name = $request->$data['name'];
+            $org->name = $data['name'];
             if (isset($data['email'])) {
                 $org->email = $data['email'];
             }
@@ -42,11 +43,13 @@ class OrganizationController extends Controller
             }
 
             $org->save();
+
             return response()->json(['message' => 'Organization created successfully'], 201);
         } catch (\Throwable $th) {
-            throw $th;
+            return response()->json(['message' => 'Error creating organization', 'error' => $th->getMessage()], 500);
         }
     }
+
 
 
     /**
