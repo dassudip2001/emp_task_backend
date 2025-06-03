@@ -18,6 +18,7 @@ Route::prefix('v1')->group(
 
         Route::middleware('auth:api')->group(
             function () {
+                Route::post('/register', [AuthController::class, 'register']);
                 Route::get('/user', [UserController::class, 'getUser']);
                 Route::post('/logout', [UserController::class, 'logout']);
                 Route::apiResource('daily-updates', DailyUpdateController::class)->only(['index', 'store', 'edit', 'update', 'destroy']);
